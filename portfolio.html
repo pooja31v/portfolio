@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pooja V — AI & Data Science Portfolio</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --dark-blue: #001738;
+      --muted: #a9bdc9;
+      --emerald: #00b388;
+      --amber: #f5b14c;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    /* Reset + base */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:
+        radial-gradient(800px 300px at 8% 8%, rgba(0,179,136,0.02), transparent 8%),
+        var(--dark-blue);
+      color:#ffffff;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      overflow-y:auto;
+      cursor: none; /* hide native cursor; use custom round cursor below */
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Header */
+    header{
+      position:fixed;left:0;right:0;top:0;height:76px;display:flex;align-items:center;padding:12px 30px;gap:18px;
+      background: linear-gradient(180deg, rgba(2,20,46,0.65), rgba(2,20,46,0.45));
+      border-bottom:1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px); z-index:1400;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .avatar{width:56px;height:56px;border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,0.03);box-shadow:0 6px 20px rgba(0,0,0,0.55)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .brand h1{font-family:"Montserrat";font-weight:700;font-size:18px;margin:0}
+    .brand p{font-size:12px;color:var(--muted);margin-top:2px}
+
+    nav.topnav{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .nav-btn{background:transparent;border:0;color:var(--muted);padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    .nav-btn:hover{color:#fff;background:rgba(255,255,255,0.02);transform:translateY(-3px)}
+    .nav-btn.active{color:#fff;background:rgba(255,255,255,0.03);box-shadow:0 8px 18px rgba(0,0,0,0.5)}
+    .theme-toggle{margin-left:6px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:var(--muted);cursor:pointer}
+
+    /* Layout */
+    .wrap{max-width:1200px;margin:110px auto;padding:20px;display:grid;grid-template-columns:320px 1fr;gap:28px}
+    @media (max-width:980px){.wrap{grid-template-columns:1fr;margin-top:96px;padding:14px}}
+
+    /* Left column */
+    .left{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+    .left .photo{width:140px;height:180px;border-radius:6px;overflow:hidden;margin:6px auto;border:4px solid rgba(255,255,255,0.06)}
+    .left .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .left h2{margin-top:12px;text-align:center;font-family:"Montserrat";font-size:20px}
+    .left p.role{text-align:center;color:var(--muted);font-size:13px;margin-top:6px}
+
+    .left h4{font-size:13px;color:var(--muted);margin-top:16px;margin-bottom:8px}
+    .badge{display:inline-block;background:var(--glass);padding:8px 10px;border-radius:999px;color:#fff;margin:6px 6px 0 0;border:1px solid rgba(255,255,255,0.02)}
+    .tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .tool{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:8px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+
+    .left .actions{display:flex;gap:10px;justify-content:center;margin-top:14px}
+    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn.primary{background:var(--emerald);color:#021019;box-shadow:0 10px 30px rgba(0,179,136,0.12)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+    /* Right column */
+    .right{display:flex;flex-direction:column;gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 40px rgba(0,0,0,0.55)}
+    .card h3{margin-bottom:8px;font-family:"Montserrat"}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* Projects */
+    .projects{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    @media (max-width:980px){.projects{grid-template-columns:1fr}}
+    .project{border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));cursor:pointer;transition:transform .22s ease,box-shadow .22s ease}
+    .project:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(0,0,0,0.6);border-color:rgba(245,177,76,0.9)}
+    .project .tech{display:inline-block;padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:8px;font-size:12px;color:var(--muted);margin-top:10px}
+
+    /* Skills bars */
+    .skill{margin:12px 0}
+    .skill .label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+    .bar{height:12px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:6px;overflow:hidden}
+    .fill{height:100%;width:0;background:linear-gradient(90deg,var(--emerald),#06c2a0);border-radius:999px;transition:width 1.4s cubic-bezier(.2,.9,.3,1)}
+
+    /* Timeline (education) */
+    .timeline-section {
+  margin: 20px 0;
+  position: relative;
+}
+
+.timeline {
+  position: relative;
+  margin: 40px 0;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  background: #555;  /* timeline line color */
+  transform: translateX(-50%);
+}
+
+.timeline-box {
+  width: 45%;
+  padding: 20px;
+  position: relative;
+  margin: 20px 0;
+}
+
+.timeline-box .content {
+  background: #1d1d1d;
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #00bcd4;
+}
+
+.timeline-box.left {
+  float: left;
+  text-align: left;
+}
+
+.timeline-box.right {
+  float: right;
+  text-align: left;
+}
+
+.timeline-box::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  width: 15px;
+  height: 15px;
+  background: #00bcd4;
+  border-radius: 50%;
+  border: 3px solid #1d1d1d;
+}
+
+.timeline-box.left::after {
+  right: -10px;
+}
+
+.timeline-box.right::after {
+  left: -10px;
+}
+
+/* Clearfix */
+.timeline::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+    /* Certificates */
+    .certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .cert{padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .18s ease}
+    .cert:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.6);border-color:var(--amber)}
+
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);z-index:2200}
+    .lightbox img{max-width:92%;max-height:86%;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,0.7)}
+
+    /* footer */
+    footer{text-align:center;padding:28px;color:var(--muted);font-size:14px;margin-top:36px}
+
+    /* particle canvas sits behind everything */
+    canvas.bg{position:fixed;left:0;top:0;z-index:0;pointer-events:none}
+
+    /* custom transparent round cursor */
+    .cursor {
+      position:fixed;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background: rgba(255,255,255,0.06); /* subtle transparent */
+      border: 1px solid rgba(255,255,255,0.18);
+      transform: translate(-50%,-50%);
+      pointer-events:none;
+      z-index:2500;
+      transition: width .12s ease, height .12s ease, background .12s ease, border .12s ease;
+      backdrop-filter: blur(2px);
+    }
+    .cursor.big{ width:38px; height:38px; background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.28); }
+
+    @media (max-width:980px){
+      header{padding:10px 14px}
+      .brand h1{font-size:16px}
+      .wrap{grid-template-columns:1fr;padding:14px}
+      .left{order:2}
+      .right{order:1}
+      .left .photo{width:120px;height:156px}
+      .cursor{display:none} /* hide custom cursor on small touch devices */
+    }
+
+    /* Light-mode support (toggle) */
+    body.light{
+      background: linear-gradient(800px 300px at 8% 8%, rgba(245,177,76,0.02), transparent 8%), #0a2b3a;
+      color:#021019;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- header -->
+  <header>
+    <div class="brand">
+      <div class="avatar"><img src="C:\Users\pooja\OneDrive\Desktop\pooojjjaaa\pic.jpg" alt="Pooja photo"></div>
+      <div>
+        <h1>Pooja V</h1>
+        <p style="margin-top:4px;color:var(--muted);font-size:13px">Artificial Intelligence & Data Science Student</p>
+      </div>
+    </div>
+
+    <nav class="topnav" aria-label="main navigation">
+      <button class="nav-btn active" data-target="home">Home</button>
+      <button class="nav-btn" data-target="skills">Skills</button>
+      <button class="nav-btn" data-target="projects">Projects</button>
+      <button class="nav-btn" data-target="education">Education</button>
+      <button class="nav-btn" data-target="certs">Certificates</button>
+      <button class="nav-btn" data-target="contact">Contact</button>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">Light</button>
+    </nav>
+  </header>
+
+  <!-- main layout -->
+  <div class="wrap" id="app" style="position:relative;z-index:1">
+    <!-- left -->
+    <aside class="left">
+      <!-- LEFT PANEL PASSPORT IMAGE (masked to 140x180) -->
+      <div class="photo">
+        <img src="C:\Users\pooja\OneDrive\Desktop\pooojjjaaa\pic.jpg" alt="Pooja passport photo">
+      </div>
+
+      <h2>Pooja V</h2>
+      <p class="role">AI & Data Science Student · Global Academy of Technology</p>
+
+      <div class="section">
+        <h4>Career Objective</h4>
+        <p class="muted">To secure a challenging position in the field of Artificial Intelligence and Data Science where I can apply my skills in machine learning, data analysis, and problem-solving to contribute to real-world projects and grow as a professional.</p>
+      </div>
+
+      <div class="section">
+        <h4>Areas of Interest</h4>
+        <div class="tools">
+          <span class="badge">Machine Learning</span>
+          <span class="badge">Data Analytics & Visualization</span>
+          <span class="badge">Computer Vision</span>
+          <span class="badge">Artificial Intelligence Applications</span>
+          <span class="badge">Predictive Modeling</span>
+          <span class="badge">Big Data Technologies</span>
+          <span class="badge">Software Development</span>
+          <span class="badge">Cloud Computing</span>
+          <span class="badge">Model Deployment & MLOps</span>
+          <span class="badge">Deep Learning</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>Contact</h4>
+        <p class="muted">Email</p>
+        <p>pooja31v@gmail.com</p>
+        <p class="muted" style="margin-top:8px">LinkedIn</p>
+        <p><a href="https://www.linkedin.com/in/pooja-v-b98462380" style="color:var(--emerald)">linkedin.com/in/pooja-v-b98462380</a></p>
+
+        <div class="actions" style="margin-top:12px">
+          <a class="btn primary" href="/resume.pdf" download>Download Resume</a>
+          <a class="btn ghost" href="mailto:pooja31v@gmail.com">Email</a>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>CODING LANGUAGES</h4>
+        <div class="tools">
+          <span class="tool">Python</span>
+          <span class="tool">JAVA</span>
+          <span class="tool">scikit-learn</span>
+          <span class="tool">SQL</span>
+          <span class="tool">Tableau</span>
+          <span class="tool">C</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- right -->
+    <main class="right">
+
+      <!-- HOME -->
+      <section id="home" class="card">
+        <h3>About</h3>
+        <p class="muted" style="margin-top:10px">I’m an Artificial Intelligence and Data Science student with hands-on experience in machine learning, analytics, and AI-driven applications. I enjoy turning complex data into actionable insights and developing models that solve real-world challenges. I’m constantly learning, building, and exploring innovative ideas in the AI space.</p>
+
+        <div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:220px">
+            <strong style="font-size:18px;color:#fff">4+</strong>
+            <div class="muted">Major Projects</div>
+          </div>
+          <div class="card" style="flex:1;min-width:220px">
+            <strong style="font-size:18px;color:#fff">7+</strong>
+            <div class="muted">Certifications</div>
+          </div>
+          <div class="card" style="flex:1;min-width:220px">
+            <strong style="font-size:18px;color:#fff">9.17</strong>
+            <div class="muted">CGPA</div>
+          </div>
+          <div class="card" style="flex:1;min-width:220px">
+            <strong style="font-size:18px;color:#fff">BE in Artificial Intelligence & Data Science,3rd Year</strong>
+            <div class="muted">Currently Pursuing</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills" class="card" style="display:none">
+        <h3>Skills</h3>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px">
+          <div>
+            <h4 class="muted">Technical</h4>
+            <div class="skill"><div class="label"><span>Python</span><span class="muted">90%</span></div><div class="bar"><div class="fill" data-width="90%"></div></div></div>
+            <div class="skill"><div class="label"><span>Machine Learning</span><span class="muted">85%</span></div><div class="bar"><div class="fill" data-width="85%"></div></div></div>
+            <div class="skill"><div class="label"><span>Data Visualization</span><span class="muted">80%</span></div><div class="bar"><div class="fill" data-width="80%"></div></div></div>
+            <div class="skill"><div class="label"><span>SQL & Databases</span><span class="muted">82%</span></div><div class="bar"><div class="fill" data-width="82%"></div></div></div>
+            <div class="skill"><div class="label"><span>JAVA</span><span class="muted">80%</span></div><div class="bar"><div class="fill" data-width="80%"></div></div></div>
+            <div class="skill"><div class="label"><span>C/C++</span><span class="muted">82%</span></div><div class="bar"><div class="fill" data-width="82%"></div></div></div>
+          </div>
+
+          <div>
+            <h4 class="muted">Soft Skills</h4>
+            <div class="skill"><div class="label"><span>Problem Solving</span><span class="muted">95%</span></div><div class="bar"><div class="fill" data-width="95%"></div></div></div>
+            <div class="skill"><div class="label"><span>Communication</span><span class="muted">88%</span></div><div class="bar"><div class="fill" data-width="88%"></div></div></div>
+            <div class="skill"><div class="label"><span>Leadership</span><span class="muted">75%</span></div><div class="bar"><div class="fill" data-width="75%"></div></div></div>
+            <div class="skill"><div class="label"><span>Time Management</span><span class="muted">84%</span></div><div class="bar"><div class="fill" data-width="84%"></div></div></div>
+            <div class="skill"><div class="label"><span>Creativity & Innovation</span><span class="muted">80%</span></div><div class="bar"><div class="fill" data-width="80%"></div></div></div>
+            <div class="skill"><div class="label"><span>Critical Thinking</span><span class="muted">82%</span></div><div class="bar"><div class="fill" data-width="82%"></div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects" class="card" style="display:none">
+        <h3>Highlighted Projects</h3>
+        <div class="projects" style="margin-top:12px">
+          <div class="project" data-id="p1">
+            <h4>Fake Review Detection</h4>
+            <p class="muted">TF-IDF + metadata features with Logistic Regression / Random Forest / SVM.</p>
+            <span class="tech">Python • NLTK • scikit-learn</span>
+          </div>
+
+          <div class="project" data-id="p2">
+            <h4>Fuzzy TOPSIS Decision Tool</h4>
+            <p class="muted">Fuzzy multi-criteria ranking for supply-chain algorithm selection.</p>
+            <span class="tech">Python • MCDM</span>
+          </div>
+
+          <div class="project" data-id="p3">
+            <h4>Historical Document Preservation DBMS</h4>
+            <p class="muted">OCR, metadata tagging, advanced search and backup automation.</p>
+            <span class="tech">MySQL • OCR</span>
+          </div>
+
+          <div class="project" data-id="p4">
+            <h4>Image Sharpening</h4>
+            <p class="muted">Laplacian / Unsharp Masking to enhance edges & details.</p>
+            <span class="tech">OpenCV • Python</span>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- EDUCATION -->
+      <section id="education" class="timeline-section">
+  <h3>Education</h3>
+
+  <div class="timeline">
+
+    <!-- BOX 1 — BE (FULL CONTENT) -->
+    <div class="timeline-box left">
+      <div class="content">
+        <h4>BE — Artificial Intelligence & Data Science</h4>
+        <p><strong>Global Academy of Technology</strong> — CGPA: 9.17</p>
+
+        <div style="margin-top:10px;"><strong>Relevant Courses:</strong></div>
+        <ul style="margin-top:6px; line-height:1.6;">
+          <li><strong>DSA:</strong> Implementation of lists, trees, graphs, hashing, sorting and algorithmic problem solving.</li>
+          <li><strong>DAA:</strong> Analysis of algorithms, complexity, dynamic programming and greedy algorithms.</li>
+          <li><strong>CN:</strong> Networking fundamentals — OSI/TCP-IP, routing, switching, and protocols.</li>
+          <li><strong>ML:</strong> Supervised/unsupervised models, evaluation metrics, cross-validation and pipelines.</li>
+          <li><strong>BDA:</strong> Big-data concepts, processing frameworks and analytics patterns.</li>
+          <li><strong>OOP (Java):</strong> Classes, interfaces, inheritance, design patterns.</li>
+          <li><strong>DBMS:</strong> Relational modeling, normalization, SQL, transactions and indexing.</li>
+          <li><strong>Web:</strong> HTML, CSS basics and backend concepts for data apps.</li>
+          <li><strong>OS:</strong> Process scheduling, memory management, concurrency concepts.</li>
+          <li><strong>IP:</strong> Image preprocessing, filters, transforms, basic computer vision tasks.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BOX 2 — 12th -->
+    <div class="timeline-box right">
+      <div class="content">
+        <h4>12th — Vidyanikethan Public School</h4>
+        <p>Completed Higher Secondary Education</p>
+      </div>
+    </div>
+
+    <!-- BOX 3 — 10th -->
+    <div class="timeline-box left">
+      <div class="content">
+        <h4>10th — Orchids The International School</h4>
+        <p>Secondary School </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+      <!-- CERTIFICATES -->
+      <section id="certs" class="card" style="display:none">
+        <h3>Certificates & Achievements</h3>
+        <div class="certs" style="margin-top:12px">
+          <div class="cert" data-img="">Infosys Python Certificate</div>
+          <div class="cert" data-img="">Infosys Computer Networks</div>
+          <div class="cert" data-img="">Apache Spark (Udemy)</div>
+          <div class="cert" data-img="">Infosys Java Certificate</div>
+          <div class="cert" data-img="">Statistical Machine Learning Infosys</div>
+          <div class="cert" data-img="">Google Data Analytics Coursera Certification</div>
+          <div class="cert" data-img="">IBM AI Fundamentals</div>
+          <div class="cert" data-img="">web Infosys Certification</div>
+          <div class="cert" data-img="">Full Stack Developmenet using MERN</div>
+          <div class="cert" data-img="">Google Certificate on Data Driven Decisions</div>
+        </div>
+        <p class="muted" style="margin-top:12px"><strong>Achievements:</strong> 1.Selected for Round 2 — SAP Hackfest. 2.Core committee member — VTU Fest.</p>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="card" style="display:none">
+        <h3>Contact</h3>
+        <p class="muted">Email</p><p>pooja31v@gmail.com</p>
+        <p class="muted">Phone</p><p>+91 97311 85899</p>
+        <p class="muted">LinkedIn</p><p><a href="https://www.linkedin.com/in/pooja-v-b98462380" style="color:var(--emerald)">linkedin.com/in/pooja-v-b98462380</a></p>
+        <p class="muted">Location</p><p>Bengaluru,India</p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- lightbox -->
+  <div id="lightbox" class="lightbox" style="display:none;align-items:center;justify-content:center;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2200">
+    <img id="lbimg" src="" alt="preview" style="max-width:92%;max-height:86%;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,0.7)">
+  </div>
+
+  <!-- custom transparent round cursor element -->
+  <div class="cursor" id="cursor"></div>
+
+  <footer>© 2025 Pooja V — AI & Data Science</footer>
+
+<script>
+/* ---------------- TAB NAVIGATION ---------------- */
+const navButtons = document.querySelectorAll('.nav-btn');
+const sections = ['home','skills','projects','education','certs','contact'];
+function showSection(id){
+  // hide all main right sections
+  sections.forEach(s => {
+    const el = document.getElementById(s);
+    if(el) el.style.display = (s === id) ? 'block' : 'none';
+  });
+  // active class
+  navButtons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navButtons.forEach(btn => {
+  btn.addEventListener('click', ()=> showSection(btn.dataset.target));
+});
+document.addEventListener('DOMContentLoaded', ()=> showSection('home'));
+
+/* ---------------- SKILL BARS ANIMATION ---------------- */
+const fills = document.querySelectorAll('.fill');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.width = entry.target.dataset.width || '80%';
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.3});
+fills.forEach(f=>observer.observe(f));
+
+/* ---------------- LIGHTBOX for certs/projects ---------------- */
+const certs = document.querySelectorAll('.cert');
+const lightbox = document.getElementById('lightbox');
+const lbimg = document.getElementById('lbimg');
+certs.forEach(c=>{
+  c.addEventListener('click', ()=>{
+    const img = c.dataset.img;
+    if(img){ lbimg.src = img; }
+    else {
+      const text = c.textContent.trim().replace(/&/g,'&amp;').replace(/</g,'&lt;');
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='100%' height='100%' fill='#06121a'/><text x='50%' y='50%' font-family='Poppins' font-size='40' fill='#00b388' text-anchor='middle'>${text}</text></svg>`;
+      lbimg.src = 'data:image/svg+xml;charset=utf8,'+encodeURIComponent(svg);
+    }
+    lightbox.style.display = 'flex';
+  });
+});
+lightbox.addEventListener('click', ()=> { lightbox.style.display = 'none'; lbimg.src = ''; });
+
+/* ---------------- PROJECT LIGHTBOX ---------------- */
+document.querySelectorAll('.project').forEach(p=>{
+  p.addEventListener('click', ()=>{
+    const title = p.querySelector('h4').textContent;
+    const desc = p.querySelector('p').textContent;
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='100%' height='100%' fill='#06121a'/><text x='50%' y='40%' font-family='Montserrat' font-size='36' fill='#00b388' text-anchor='middle'>${title}</text><text x='50%' y='56%' font-family='Poppins' font-size='20' fill='#c9d6d8' text-anchor='middle'>${desc}</text></svg>`;
+    lbimg.src = 'data:image/svg+xml;charset=utf8,'+encodeURIComponent(svg);
+    lightbox.style.display = 'flex';
+  });
+});
+
+/* ---------------- THEME TOGGLE ---------------- */
+const themeBtn = document.getElementById('themeToggle');
+if(themeBtn) themeBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('light');
+  themeBtn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
+});
+
+/* ---------------- PARTICLES BACKGROUND (subtle) ---------------- */
+const canvas = document.createElement('canvas');
+canvas.className = 'bg';
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+let W = canvas.width = innerWidth;
+let H = canvas.height = innerHeight;
+window.addEventListener('resize', ()=>{ W = canvas.width = innerWidth; H = canvas.height = innerHeight; });
+const particles = [];
+for(let i=0;i<60;i++){
+  particles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.8+0.4, vx: (Math.random()-0.5)*0.25, vy: (Math.random()-0.5)*0.25 });
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x = W; if(p.x>W) p.x=0;
+    if(p.y<0) p.y = H; if(p.y>H) p.y=0;
+    ctx.beginPath();
+    const g = ctx.createRadialGradient(p.x,p.y,p.r*0.1,p.x,p.y,p.r*6);
+    g.addColorStop(0,'rgba(0,179,136,0.08)');
+    g.addColorStop(0.6,'rgba(6,78,59,0.02)');
+    g.addColorStop(1,'transparent');
+    ctx.fillStyle = g;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* ---------------- CUSTOM TRANSPARENT ROUND CURSOR ---------------- */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e=>{
+  if(cursor){
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  }
+});
+
+/* Show 'pointer' effect when over interactive elements */
+function setCursorHoverState(on){
+  if(!cursor) return;
+  if(on) cursor.classList.add('big'); else cursor.classList.remove('big');
+}
+document.addEventListener('mouseover', (e)=>{
+  let el = e.target;
+  let interactive = false;
+  while(el && el !== document.body){
+    if(el.matches && (el.matches('a') || el.matches('button') || el.matches('.project') || el.matches('.cert') || el.matches('.nav-btn') || el.matches('.btn'))){
+      interactive = true; break;
+    }
+    el = el.parentElement;
+  }
+  setCursorHoverState(interactive);
+});
+document.addEventListener('mouseout', (e)=>{
+  const el = document.elementFromPoint((e.clientX||0), (e.clientY||0));
+  if(!el) setCursorHoverState(false);
+});
+
+/* Accessibility: allow keyboard focus visible by showing outline on focusable elements */
+document.addEventListener('keyup', (e)=>{
+  if(e.key === 'Tab'){
+    document.querySelectorAll('a,button,input,textarea').forEach(el=>{
+      el.style.outline = '2px solid rgba(0,179,136,0.25)';
+      el.style.outlineOffset = '3px';
+    });
+  }
+});
+</script>
+</body>
+</html>
